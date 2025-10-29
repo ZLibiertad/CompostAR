@@ -3,29 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CompostAR</title>
+
+    <!-- Librerías -->
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.aframe.js"></script>
-    <script>
-</script>
-    <title>CompostAR</title>
-    
+
     <style>
-      body { margin: 0; overflow: hidden; }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: black;
+      }
+
+      #startButton {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        font-size: 1.5em;
+        z-index: 10;
+        cursor: pointer;
+      }
     </style>
   </head>
+
   <body>
+    <!-- Botón para iniciar -->
+    <div id="startButton">Tocar para iniciar cámara</div>
+
+    <!-- Escena oculta hasta que se active -->
     <a-scene
+      id="scene"
       mindar-image="imageTargetSrc: assets/bananatarget.mind"
       color-space="sRGB"
       embedded
       vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: true"
+      device-orientation-permission-ui="enabled: false"
+      style="display: none"
     >
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-sphere position="0 0 0" radius="0.25" color="#EF2D5E"></a-sphere>
+        <a-sphere position="0 0 0" radius="0.25" color="#00FF7F"></a-sphere>
+        <a-text value="CompostAR" position="0 -0.5 0" align="center" color="#FFFFFF"></a-text>
       </a-entity>
     </a-scene>
+
+    <script>
+      const startButton = document.querySelector("#startButton");
+      const scene = document.querySelector("#scene");
+
+      startButton.addEventListener("click", async () => {
+        startButton.style.display = "none";
+        scene.style.display = "block";
+
+        try {
+          await navigator.mediaDevices.getUserMedia({ video: true });
+          console.log("✅ Cámara habilitada");
+        } catch (err) {
+          alert("No se pudo acceder a la cámara: " + err.message);
+        }
+      });
+    </script>
   </body>
 </html>
