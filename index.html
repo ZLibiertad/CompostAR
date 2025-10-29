@@ -6,7 +6,17 @@
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.aframe.js"></script>
+    <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ video: true });
+    } catch (err) {
+      alert("Por favor, permite el acceso a la cámara para usar la realidad aumentada.");
+    }
+  });
+</script>
     <title>CompostAR</title>
+    
     <style>
       body { margin: 0; overflow: hidden; }
     </style>
