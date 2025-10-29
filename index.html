@@ -3,75 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CompostAR</title>
+    <title>CompostAR - versión AR.js</title>
 
-    <!-- Librerías -->
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
+    <!-- A-Frame + AR.js -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.aframe.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.2.2/aframe/build/aframe-ar.js"></script>
 
     <style>
       body {
         margin: 0;
         overflow: hidden;
-        background-color: black;
       }
 
-      #startButton {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.9);
+      #info {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.6);
         color: white;
-        font-size: 1.5em;
-        z-index: 10;
-        cursor: pointer;
+        font-family: sans-serif;
+        padding: 8px 15px;
+        border-radius: 10px;
+        font-size: 14px;
+        text-align: center;
       }
     </style>
   </head>
 
   <body>
-    <!-- Botón para iniciar -->
-    <div id="startButton">Tocar para iniciar cámara</div>
+    <!-- Escena principal -->
+    <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+      <!-- Cámara AR -->
+      <a-marker preset="hiro">
+        <!-- Esfera simple -->
+        <a-sphere position="0 0.5 0" radius="0.25" color="#00FF7F"></a-sphere>
 
-    <!-- Escena oculta hasta que se active -->
-    <a-scene
-      id="scene"
-      mindar-image="imageTargetSrc: assets/bananatarget.mind"
-      color-space="sRGB"
-      embedded
-      vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false"
-      style="display: none"
-    >
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <!-- Texto sobre compostaje -->
+        <a-text
+          value="¡CompostAR!\nReduce residuos y cuida el planeta 🌱"
+          align="center"
+          position="0 1 0"
+          width="3"
+          color="#FFFFFF"
+        ></a-text>
+      </a-marker>
 
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-sphere position="0 0 0" radius="0.25" color="#00FF7F"></a-sphere>
-        <a-text value="CompostAR" position="0 -0.5 0" align="center" color="#FFFFFF"></a-text>
-      </a-entity>
+      <a-entity camera></a-entity>
     </a-scene>
 
-    <script>
-      const startButton = document.querySelector("#startButton");
-      const scene = document.querySelector("#scene");
-
-      startButton.addEventListener("click", async () => {
-        startButton.style.display = "none";
-        scene.style.display = "block";
-
-        try {
-          await navigator.mediaDevices.getUserMedia({ video: true });
-          console.log("✅ Cámara habilitada");
-        } catch (err) {
-          alert("No se pudo acceder a la cámara: " + err.message);
-        }
-      });
-    </script>
+    <div id="info">
+      Apunta con la cámara al marcador <b>Hiro</b> para ver el contenido AR.
+      <br />
+      (Podés imprimirlo desde:
+      <a href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/three.js/examples/marker-training/examples/pattern-files/hiro.png" target="_blank" style="color:#90ee90;">aquí</a>)
+    </div>
   </body>
 </html>
