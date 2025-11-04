@@ -1,33 +1,45 @@
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
-  <body>
-    <a-scene mindar-image="imageTargetSrc: assets/bananaAbstractaTarget.mind; **filterMinCF: 0.005**" 
-             color-space="sRGB" 
-             renderer="colorManagement: true, physicallyCorrectLights: true" vr-mode-ui="enabled: false" 
-             device-orientation-permission-ui="enabled: false">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+        <a-scene mindar-image="imageTargetSrc: assets/multiTargets.mind; filterMinCF: 0.005" 
+             color-space="sRGB" 
+             renderer="colorManagement: true, physicallyCorrectLights: true" vr-mode-ui="enabled: false" 
+             device-orientation-permission-ui="enabled: false">
+      
+      <a-assets>
+        <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png" />
+        <a-asset-item id="bananaModel" src="assets/bananaConPiel2.glb"></a-asset-item>
+        
+        <a-asset-item id="botellaPlasticaModel" src="assets/botellaPlastica2.glb"></a-asset-item>
+      </a-assets>
+
+      <a-entity light="type: ambient; color: #BBB; intensity: 0.8"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+            <a-entity mindar-image-target="targetIndex: 0">
+        <a-gltf-model 
+          src="#bananaModel" 
+          position="0 0 0" 
+          rotation="0 0 0" 
+          scale="3.05 3.05 3.05"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+        ></a-gltf-model>
+      </a-entity>
       
-      <a-assets>
-        <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png" />
-        <a-asset-item id="bananaModel" src="assets/bananaConPiel2.glb"></a-asset-item>
-      </a-assets>
-
-      <a-entity light="type: ambient; color: #BBB; intensity: 0.8"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-gltf-model 
-          src="#bananaModel" 
-          position="0 0 0" 
-          rotation="0 0 0" 
-          scale="3.05 3.05 3.05"
-          animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
-        ></a-gltf-model>
-      </a-entity>
-    </a-scene>
-  </body>
+            <a-entity mindar-image-target="targetIndex: 1">
+        <a-gltf-model 
+          src="#botellaPlasticaModel"           
+          position="0 0 0" 
+          rotation="0 0 0" 
+          scale="1 1 1"           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear"
+        ></a-gltf-model>
+      </a-entity>
+      
+    </a-scene>
+  </body>
 </html>
