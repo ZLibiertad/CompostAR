@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   </head>
   <body>
-    <a-scene mindar-image="imageTargetSrc: assets/bananaAbstractaTarget.mind;" 
+    <a-scene mindar-image="imageTargetSrc: assets/bananaAbstractaTarget.mind; **filterMinCF: 0.005**" 
              color-space="sRGB" 
              renderer="colorManagement: true, physicallyCorrectLights: true" vr-mode-ui="enabled: false" 
              device-orientation-permission-ui="enabled: false">
@@ -24,7 +24,7 @@
           src="#bananaModel" 
           position="0 0 0" 
           rotation="0 0 0" 
-          scale="5.05 5.05 5.05"
+          scale="3.05 3.05 3.05"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
         ></a-gltf-model>
       </a-entity>
